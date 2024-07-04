@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { ref, uploadBytesResumable } from "firebase/storage";
-import { storage, db } from "../../firebase";  // Adjust the path according to your file structure
+import { storage, db } from "../../firebase"; 
 import { collection, doc, setDoc } from "firebase/firestore";
-import './FileUpload.css';  // Make sure to create this CSS file and adjust the import path
+import './FileUpload.css'; 
 
 const FileUpload = () => {
   const inputRef = useRef();
@@ -38,7 +38,7 @@ const FileUpload = () => {
   };
 
   const handleUpload = () => {
-    setErrorMessage("");  // Clear previous error message
+    setErrorMessage(""); 
     if (!selectedFile || !email || !questions) {
       setErrorMessage("Please provide an email address, and questions.");
       return;
@@ -52,7 +52,7 @@ const FileUpload = () => {
       setUploadStatus("uploading");
       console.log("Starting upload");
 
-      const uniqueId = Date.now();  // Create a unique folder for each submission
+      const uniqueId = Date.now(); 
       const storageRef = ref(storage, `${email}/uploads/${uniqueId}/${selectedFile.name}`);
       const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
@@ -71,7 +71,6 @@ const FileUpload = () => {
           console.log("Upload complete, file uploaded to Firebase Storage");
           setProgress(100);
 
-          // Save questions to Firestore
           const userRef = doc(db, `users/${email}`);
           const submissionsRef = collection(userRef, "submissions");
           await setDoc(doc(submissionsRef, `${uniqueId}`), {
