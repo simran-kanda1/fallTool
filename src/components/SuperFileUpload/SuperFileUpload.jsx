@@ -1,5 +1,8 @@
+// SuperFileUpload.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc, deleteDoc, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 import './SuperFileUpload.css';
 import logo from './logo.png';
 
@@ -11,25 +14,39 @@ const SuperFileUpload = ({ presetQuestions, setPresetQuestions, presetEmails, se
   const [confirmIndex, setConfirmIndex] = useState(null);
   const navigate = useNavigate();
 
-  const addQuestion = () => {
+  const addQuestion = async () => {
     if (newQuestion.trim()) {
+      const docRef = await addDoc(collection(db, "presetQuestions"), { question: newQuestion.trim() });
       setPresetQuestions([...presetQuestions, newQuestion.trim()]);
       setNewQuestion("");
     }
   };
 
-  const removeQuestion = (index) => {
+  const removeQuestion = async (index) => {
+    const questionToDelete = presetQuestions[index];
+    const q = query(collection(db, "presetQuestions"), where("question", "==", questionToDelete));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
     setPresetQuestions(presetQuestions.filter((_, i) => i !== index));
   };
 
-  const addEmail = () => {
+  const addEmail = async () => {
     if (newEmail.trim()) {
+      const docRef = await addDoc(collection(db, "presetEmails"), { email: newEmail.trim() });
       setPresetEmails([...presetEmails, newEmail.trim()]);
       setNewEmail("");
     }
   };
 
-  const removeEmail = (index) => {
+  const removeEmail = async (index) => {
+    const emailToDelete = presetEmails[index];
+    const q = query(collection(db, "presetEmails"), where("email", "==", emailToDelete));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
     setPresetEmails(presetEmails.filter((_, i) => i !== index));
   };
 

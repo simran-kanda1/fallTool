@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+// App.js
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { db } from "./firebase";
 import FileUpload from "./components/FileUpload/FileUpload";
 import SuperFileUpload from "./components/SuperFileUpload/SuperFileUpload";
 import Login from "./components/Login/Login";
@@ -8,20 +11,18 @@ import './App.css';
 const App = () => {
   const [role, setRole] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [presetQuestions, setPresetQuestions] = useState([
-    "How many residents fell?",
-    "How many are reoccurring falls?",
-    "What time of day?",
-    "What day of the week?",
-    "Where are they falling?",
-    "What's causing the fall?",
-    "What's the result of the fall?",
-  ]);
-  const [presetEmails, setPresetEmails] = useState([
-    "example1@example.com",
-    "example2@example.com",
-    "example3@example.com",
-  ]);
+  const [presetQuestions, setPresetQuestions] = useState([]);
+  const [presetEmails, setPresetEmails] = useState([]);
+
+  useEffect(() => {
+    const fetchPresets = async () => {
+      const questionsSnapshot = await getDocs(collection(db, "presetQuestions"));
+      const emailsSnapshot = await getDocs(collection(db, "presetEmails"));
+      setPresetQuestions(questionsSnapshot.docs.map(doc => doc.data().question));
+      setPresetEmails(emailsSnapshot.docs.map(doc => doc.data().email));
+    };
+    fetchPresets();
+  }, []);
 
   return (
     <Router>

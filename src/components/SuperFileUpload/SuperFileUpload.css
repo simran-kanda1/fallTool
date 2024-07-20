@@ -102,11 +102,13 @@
 .super-file-upload-input-group input {
   width: 100%;
   padding: 10px;
+  padding-right: 5px; /* Added padding for right side */
   font-size: 14px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   outline: none;
   transition: border-color 0.3s ease;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 .super-file-upload-input-group input:focus {
