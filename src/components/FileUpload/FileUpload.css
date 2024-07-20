@@ -1,15 +1,52 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent the body from scrolling */
+}
+
 .file-upload-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrolling on the container itself */
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000; /* Ensure the header is above other content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visual separation */
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px; /* Adjusted for less space */
 }
 
 .title-heading {
   font-size: 24px;
   font-weight: bold;
-  color: #008445;
-  margin-bottom: 50px;
+  color: #c04c2c;
+  margin: 0;
+}
+
+.scrollable-content {
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  padding-top: 200px; /* Added padding for the fixed header */
 }
 
 .file-btn {
@@ -22,16 +59,16 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
-  color: #008445;
+  color: #c04c2c;
   background-color: #fff;
-  border: 1.5px dashed #008445;
+  border: 1.5px dashed #c04c2c;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .file-btn:hover {
-  color: #008445;
+  color: #c04c2c;
   background-color: #fff;
 }
 
@@ -39,12 +76,12 @@
   width: 50px;
   height: 50px;
   font-size: 30px;
-  color: #008445;
+  color: #c04c2c;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 25px;
-  background-color: #effff4;
+  background-color: #f7d9d4;
 }
 
 .file-card {
@@ -54,7 +91,7 @@
   gap: 15px;
   color: #000;
   background-color: #fff;
-  border: 1px solid rgba(96, 255, 149, 0.281);
+  border: 1px solid rgba(192, 76, 44, 0.281);
   border-radius: 6px;
   padding: 8px 15px;
   margin-top: 10px;
@@ -84,14 +121,14 @@
 .progress {
   width: 0%;
   height: 5px;
-  background-color: #008445;
+  background-color: #c04c2c;
   border-radius: 8px;
   transition: width 0.5s ease;
 }
 
 .icon {
   font-size: 30px;
-  color: #00c264;
+  color: #c04c2c;
 }
 
 .close-icon {
@@ -107,8 +144,8 @@
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color: #065c32;
-  background-color: #effff4;
+  color: #b03926;
+  background-color: #f7d9d4;
   border: none;
   border-radius: 30px;
 }
@@ -118,12 +155,16 @@
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  background-color: #00c264;
+  background-color: #c04c2c;
   border: none;
   border-radius: 8px;
   padding: 10px;
   margin-top: 15px;
   cursor: pointer;
+}
+
+.upload-btn:hover {
+  background-color: #b03926;
 }
 
 .download-btn-container {
@@ -138,7 +179,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  background-color: #008445;
+  background-color: #c04c2c;
   border: none;
   border-radius: 8px;
   text-decoration: none;
@@ -146,7 +187,7 @@
 }
 
 .download-btn:hover {
-  background-color: #008445;
+  background-color: #b03926;
 }
 
 .download-btn span {
@@ -160,16 +201,19 @@
   margin-top: 15px;
 }
 
-.input-group label {
+.input-group label,
+.file-upload-container label {
   font-size: 14px;
   font-weight: 500;
-  color: #008445;
+  color: #c04c2c; /* Updated color */
   margin-bottom: 5px;
   display: block;
 }
 
 .input-group input,
-.input-group textarea {
+.input-group textarea,
+.file-upload-container input,
+.file-upload-container textarea {
   width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -180,8 +224,10 @@
 }
 
 .input-group input:focus,
-.input-group textarea:focus {
-  border-color: #008445;
+.input-group textarea:focus,
+.file-upload-container input:focus,
+.file-upload-container textarea:focus {
+  border-color: #c04c2c;
 }
 
 .input-group textarea {
@@ -189,11 +235,68 @@
   resize: none;
 }
 
+/* CSS for preset emails */
+.preset-emails-btn {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: #c04c2c; /* Updated color */
+  background-color: #fff;
+  border: 1px solid #c04c2c;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.preset-emails-btn:hover {
+  background-color: #f7d9d4;
+}
+
+.preset-emails-card {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.preset-emails-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preset-email-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.preset-email-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.preset-email-item label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #c04c2c; /* Updated color */
+}
+
 /* CSS for error message */
 .error-message {
   color: red;
   margin-top: 10px;
   font-size: 14px;
+  text-align: center; /* Center the error message */
+  max-width: 330px; /* Ensure it wraps if too long */
+  word-wrap: break-word; /* Allow wrapping */
 }
 
 /* CSS for submission message and return button */
@@ -207,7 +310,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  background-color: #008445;
+  background-color: #c04c2c;
   border: none;
   border-radius: 8px;
   padding: 10px;
@@ -241,7 +344,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  background-color: #00c264;
+  background-color: #c04c2c;
   border: none;
   border-radius: 8px;
   padding: 10px;
@@ -250,7 +353,7 @@
 }
 
 .edit-btn {
-  background-color: #ff6347;
+  background-color: #b03926;
 }
 
 /* CSS for preset questions */
@@ -258,9 +361,9 @@
   width: 100%;
   font-size: 14px;
   font-weight: 500;
-  color: #008445;
+  color: #c04c2c; /* Updated color */
   background-color: #fff;
-  border: 1px solid #008445;
+  border: 1px solid #c04c2c;
   border-radius: 8px;
   padding: 10px;
   cursor: pointer;
@@ -269,7 +372,7 @@
 }
 
 .preset-questions-btn:hover {
-  background-color: #effff4;
+  background-color: #f7d9d4;
 }
 
 .preset-questions-card {
@@ -304,5 +407,25 @@
 .preset-question-item label {
   font-size: 14px;
   font-weight: 500;
-  color: #000;
+  color: #c04c2c; /* Updated color */
+}
+
+.logout-btn {
+  position: fixed; /* Use fixed positioning to place it relative to the viewport */
+  top: 20px;
+  right: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #888888;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  width: 80px;  /* Make the button skinnier */
+  text-align: center;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #555555;
 }
